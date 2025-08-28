@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mars Space</title>
+    <link
+      rel="icon"
+      href="https://www.pngmart.com/files/23/Red-Circle-PNG-Image.png"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <header class="w-full h-[100px]">
+      <div
+        class="w-full h-full flex justify-between items-center bg-white px-10 py-4 shadow-md"
+      >
+        <img src="./загруженное.png" alt="Mars logotipi" class="h-[50px]" />
+        <div class="flex items-center space-x-4">
+          <img
+            src="https://space.marsit.uz/img/lang-icon.8e5d7fef.svg"
+            alt="Til belgisi"
+          />
+          <select class="outline-none">
+            <option value="uz">O'zbekcha</option>
+            <option value="ru">Ruscha</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <main
+      class="w-full h-[500px] flex items-center pl-10 pr-10 justify-between"
+      style="
+        background-image: url('./39fde373d9ea0362478b4fb13ef624cc.png');
+        background-size: cover;
+      "
+    >
+      <div
+        class="h-[450px] w-[500px] rounded-[40px] px-6 py-6 flex flex-col gap-4 bg-white"
+      >
+        <div class="flex justify-between items-center px-6 py-6">
+          <img class="h-[20px]" src="./загруженное.png" alt="Logo" />
+          <div class="flex items-center">
+            <img
+              class="h-[20px] mr-2"
+              src="https://cdn-icons-png.freepik.com/512/5582/5582458.png"
+              alt="PDF belgisi"
+            />
+            <a
+              class="text-blue-400"
+              href="https://lab.marsit.uz/media/term_and_conditions/Offerta%20v1.3/MarsITSchool_oferta_v1.3.pdf"
+              target="_blank"
+            >
+              Oferta
+            </a>
+          </div>
+        </div>
+
+        <h1 class="mx-auto font-bold text-[30px]">Spacega xush kelibsiz</h1>
+
+        <div
+          class="mx-auto flex justify-between w-[400px] bg-gray-100 rounded-[20px] items-center px-4 h-10"
+        >
+          <div
+            class="w-[150px] h-[32px] cursor-pointer rounded-[40px] bg-white flex justify-center items-center"
+          >
+            <p class="font-bold">O'QUVCHI</p>
+          </div>
+          <div
+            class="w-[150px] h-[32px] cursor-not-allowed rounded-[40px] bg-gray-100 flex justify-center items-center"
+          >
+            <p class="font-bold">OTA-ONA</p>
+          </div>
+        </div>
+
+        <form id="login-form" class="flex flex-col gap-4 justify-center">
+          <input
+            id="name"
+            class="w-[400px] h-10 mx-auto outline-none border-b-2"
+            type="text"
+            placeholder="Ismingiz va familyangizni kiriting"
+          />
+          <input
+            id="phone"
+            class="w-[400px] h-10 mx-auto outline-none border-b-2"
+            type="tel"
+            value="+998"
+            placeholder="Telefon raqamingizni kiriting"
+          />
+          <button
+            id="submit-btn"
+            type="submit"
+            class="border-red-500 border-2 rounded-[40px] outline-none w-[200px] h-10 mx-auto text-red-500 hover:bg-red-100 transition"
+          >
+            Qo'shish
+          </button>
+        </form>
+
+        <div class="mx-auto">
+          <p>
+            Akkauntingiz yo‘qmi?
+            <a
+              class="text-red-600 font-semibold"
+              href="https://space.marsit.uz/signup"
+              >Ro‘yxatdan o‘tish</a
+            >
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="right h-[450px] w-[500px] items-center justify-center font-bold rounded-[40px] px-6 py-6 hidden flex-col gap-4 bg-white"
+      ></div>
+    </main>
+    <script src="./tailwind.config.js"></script>
+    <script>
+      let form = document.querySelector("form");
+      let right = document.querySelector(".right");
+      let img = document.querySelector(".img");
+
+      let students = JSON.parse(localStorage.getItem("foydalanuvchilar")) || [];
+
+      let createStudent = () => {
+        let newstudent = {
+          id: students.length + 1,
+          name: form[0].value.trim(),
+          phone: form[1].value.trim(),
+        };
+
+        if (newstudent.name && newstudent.phone) {
+          students.push(newstudent);
+          localStorage.setItem("foydalanuvchilar", JSON.stringify(students));
+          form.reset();
+          ReadUsers();
+        }
+      };
+
+      form[2].addEventListener("click", (e) => {
+        e.preventDefault();
+        createStudent();
+      });
+
+      let ReadUsers = () => {
+        right.innerHTML = "";
+        let studentslist =
+          JSON.parse(localStorage.getItem("foydalanuvchilar")) || [];
+
+        if (studentslist.length > 0) {
+          right.classList.remove("hidden");
+          right.classList.add("flex");
+
+          studentslist.map((v) => {
+            let studentsdiv = document.createElement("div");
+            studentsdiv.innerHTML = ` <div class='display flex items-center gap-5'> <img
+          class="w-[50px] h-[50px]"
+          src="https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png"
+          alt="AVATAR"
+        /> <div class='flex flex-col'><p class='text-[30px] text-red-600'> ${v.name}</p>  <p class='text-[30px] text-blue-600'> ${v.phone}</p></div></div>`;
+            right.appendChild(studentsdiv);
+          });
+        }
+      };
+
+      ReadUsers();
+    </script>
+  </body>
+</html>
